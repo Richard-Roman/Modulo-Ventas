@@ -1,0 +1,5 @@
+# Ignora el archivo de proyecto JGRASP Modulo_Ventas.gpj
+*.gpj
+
+# Ignora todos los archivos compialados de java .class
+*.class
