@@ -51,6 +51,14 @@ public class cliente {
    public int getTelefono() {
        return telefono;
    }
+   
+   public String nombre(){
+      if(this.tieneRuc()){
+         return this.getRazonSocial();
+      } else{
+         return this.getNombre();
+      }
+   }
 
    public String toString() {
      String nom;
@@ -67,7 +75,7 @@ public class cliente {
    }
    
    public static boolean esIgual(cliente a, cliente b){
-      if(a.getId() == b.getId()){
+      if(a.getId() == b.getId() && a.getTipoId().equalsIgnoreCase(b.getTipoId())){
          return true;
       } else {
          return false;
@@ -82,8 +90,7 @@ public class cliente {
       }
    }
    
-   public static cliente NuevoCliente(){
-      cliente c = cliente.crearCliente();
+   public static cliente completarRegistro(cliente c){
          while(c.estaLleno()!=0){
             switch(c.estaLleno()){
                case 1: if(c.tieneRuc()){
@@ -100,9 +107,9 @@ public class cliente {
    public static cliente crearCliente(){
       String tipoId;
       int id;
-      System.out.println("Ingrese los datos:");
-      tipoId = leer.Cadena("Tipo de documento de identidad");
-      id = leer.Entero("numero de " + tipoId);
+      System.out.println("Ingrese los siguientes datos:");
+      tipoId = leer.Cadena("Tipo de documento de identidad").toUpperCase();
+      id = leer.Entero("Numero de " + tipoId);
       cliente c = new cliente(id, tipoId);
       return c;
    }
