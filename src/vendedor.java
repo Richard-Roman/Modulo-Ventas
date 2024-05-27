@@ -2,6 +2,7 @@ public class vendedor {
     private int idVendedor;
     private String nombre;
     private String telefono;
+    private sexo; 
 
     
     public vendedor(int idVendedor) { // Constructor
