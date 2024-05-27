@@ -47,7 +47,7 @@ public class gestionClientes{
       }
    }
    
-   public void gestionarRegistro(){
+   public void gestionar(){
       int op = 0;
       do{
       System.out.println("\n---> GESTION DE CLIENTES <---");
@@ -89,7 +89,7 @@ public class gestionClientes{
    }
    
    private void buscarCliente(){
-   int op = 0;
+      int op = 0;
       do{
          System.out.println("\n------> BUSCAR CLIENTE <------");
          System.out.println("\n1. Iniciar Busqueda\n2. Regresar al menu anterior");
@@ -113,15 +113,19 @@ public class gestionClientes{
    public void menuModificar(){
    int op = 0;
       do{
-         System.out.println("\n----> MODIFICAR CLIENTE <----\n");
+         System.out.println("\n----> MODIFICAR CLIENTE <----");
          System.out.println("\n1. Seleccionar cliente a modificar\n2. Regresar al menu anterior");
          op = leer.Entero("Opcion");
          switch(op){
-            case 1: System.out.println("\nSeleccione el cliente a modficar");
+            case 1: System.out.println("\nSeleccione el cliente a modificar");
                cl = cliente.crearCliente();
                cl = this.getCliente(cl);
-               this.modificarCliente(cl);
-               break;
+               if(cl != null){
+                  this.modificarCliente(cl);
+                  break;
+               } else {
+                  System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " no esta registrado");
+               }
             case 2:System.out.println("\n<----- Regresando"); break;
             default: System.out.println("la opcion " + op + " no es valida"); break;          
          }
@@ -179,7 +183,7 @@ public class gestionClientes{
    public void menuEliminarCliente(){
    int op = 0;
       do{
-         System.out.println("\n----> ELIMINAR CLIENTE <----\n");
+         System.out.println("\n----> ELIMINAR CLIENTE <----");
          System.out.println("\n1. Seleccionar cliente a eliminar\n2. Regresar al menu anterior");
          op = leer.Entero("Opcion");
          switch(op){
@@ -221,6 +225,6 @@ public class gestionClientes{
    
    public static void main(String args[]){
       gestionClientes clientes = new gestionClientes();
-      clientes.gestionarRegistro();
+      clientes.gestionar();
    }
 }

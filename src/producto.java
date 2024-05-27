@@ -8,6 +8,10 @@ public class producto {
         this.nombre = nombre;
     }
     
+    public producto (int idProducto){
+      this.idProducto = idProducto;
+    }
+    
     // Setters
 
     public void setIdProducto(int idProducto) {
@@ -37,6 +41,28 @@ public class producto {
     }
 
     public String toString() {
-        return idProducto + " " + nombre + " " + precio;
+        return idProducto + " - " + nombre + " - " + precio;
+    }
+    
+    
+    
+    // metodo para comparar objetos
+    
+    public boolean esIgual(producto p){
+      if(this.getIdProducto() == p.getIdProducto()){
+         return true;
+      } else  {
+         return false;
+      }
+    }
+   
+   // Metodo staticos para crear nueovs objetos a partid de la clase
+    
+    public static producto crearProducto(){
+      System.out.println("Ingrese los siguientes datos:");
+      int idProducto = leer.Entero("Codigo del producto");
+      String nombre = leer.Cadena("Nombre");
+      producto p = new producto(idProducto,nombre);
+      return p;
     }
 }
