@@ -12,5 +12,11 @@ public class leer{
       System.out.print(txt + ": ");
       String e = Sc.nextLine();
       return e;
-   } 
+   }
+   
+   public static double Decimal(String txt){
+      System.out.print(txt + ": ");
+      double e = Sc.nextDouble();
+      return e;
+   }
 }
