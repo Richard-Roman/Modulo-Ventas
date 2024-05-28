@@ -2,8 +2,10 @@ public class producto {
     private int idProducto;
     private String nombre;
     private double precio;
+    
     public producto() { // Constructor
         
+
     }
     public producto(int idProducto, String nombre) { // Constructor
         this.idProducto = idProducto;
@@ -58,18 +60,20 @@ public class producto {
       }
     }
    
-   // Metodo staticos para crear nueovs objetos a partir de la clase
+   // Metodo staticos para crear nueovs objetos a partid de la clase
     
     public static producto crearProducto(){
       System.out.println("Ingrese los siguientes datos:");
       int idProducto = leer.Entero("Codigo del producto");
-      producto p = new producto(idProducto);
+      String nombre = leer.Cadena("Nombre");
+      producto p = new producto(idProducto,nombre);
       return p;
     }
     
     public static producto completarRegistro(producto p){
-      p.setNombre(leer.Cadena("Nombre")); 
+      p.setNombre(leer.Cadena("Nombre"));
       return p;
     }
+    
     
 }

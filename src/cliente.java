@@ -1,39 +1,37 @@
 public class cliente extends persona {
    private String tipoId;
+
    public cliente(){
       
    }
    // metodo construtor de la clase persona 
+
    public cliente(String tipoId, int id){
       super.setId(id);
       setTipoId(tipoId);
    }
-   // metodos set y get de la clase 
-         public void setTipoId(String tipoId){
-            this.tipoId = tipoId;
-         }
-         
-         public String getTipoId(){
-            return tipoId;
-         }
-
-   // metodo toString para devolver datos de la clase 
+   
+   public void setTipoId(String tipoId){
+      this.tipoId = tipoId;
+   }
+   
+   public String getTipoId(){
+      return tipoId;
+   }
+     
    public String toString() {
       return tipoId + ": " + getId() + " - "+ getNombre()  + " - Telefono: " + getTelefono();
    }
    
-   // metodo heredado de la clase Persona que se esta sobreescribiendo
+   
    public void imprimir(){
       System.out.println(this.toString());
    }
-
-   // metodo para comparar dos objetos de la clase cliente 
-   public boolean esIgual(cliente b){ // recibe un objeto de parametro 
-      persona c = b;  // castea el objeto a su clase padre en este caso Presona
-      // si el tipo ID del cliente es igual al Tipo ID del objeto que recibe  
-      if(this.getTipoId().equalsIgnoreCase(b.getTipoId())){ 
-         // llamamos al metodo de la clase padre para comparar dos objetos 
-         return super.esIgual(c); // retorna True o False 
+   
+   public boolean esIgual(cliente b){
+      persona c = b;  
+      if(this.getTipoId().equalsIgnoreCase(b.getTipoId())){
+         return super.esIgual(c);
       } else {
          return false;
       }
@@ -63,15 +61,13 @@ public class cliente extends persona {
       return c;
    }
    
-
-   // Metodo crear Nuevo Cliente 
    public static cliente crearCliente(){
       String tipoId;
       int id;
       System.out.println("Ingrese los siguientes datos:");
-      tipoId = leer.Cadena("Tipo de documento de identidad").toUpperCase(); // lamamos al metodo Leer cadena de la clas Leer 
-      id = leer.Entero("Numero de " + tipoId); // lamamos al metodo leer entero de la clase Leer 
-      cliente c = new cliente(tipoId,id); // Creamos un objeto de la clase cliente y le damos los parametros ingresados 
-      return c; // retornamos el onjeto 
+      tipoId = leer.Cadena("Tipo de documento de identidad").toUpperCase();
+      id = leer.Entero("Numero de " + tipoId);
+      cliente c = new cliente(tipoId,id);
+      return c;
    }
 }
