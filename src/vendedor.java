@@ -1,5 +1,8 @@
 public class vendedor extends persona{
    
+   public vendedor(){
+      
+   }
    public vendedor(int id){
       super.setId(id);
    }

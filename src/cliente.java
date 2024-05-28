@@ -1,5 +1,8 @@
 public class cliente extends persona {
    private String tipoId;
+   public cliente(){
+      
+   }
    // metodo construtor de la clase persona 
    public cliente(String tipoId, int id){
       super.setId(id);
