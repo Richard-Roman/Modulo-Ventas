@@ -67,4 +67,11 @@ public class producto {
       producto p = new producto(idProducto,nombre);
       return p;
     }
+    
+    public static producto completarRegistro(producto p){
+      p.setNombre(leer.Cadena("Nombre"));
+      return p;
+    }
+    
+    
 }
