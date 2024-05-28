@@ -65,8 +65,8 @@ public class gestionProductos{
                case 3:menuModificar(); break;
                case 4: menuEliminar(); break;
                case 5: menuImprimir(); break;
-               case 6:// menuConsultas(); break;
-               case 7:// menuReportes(); break;
+               case 6:/* menuConsultas();*/ break;
+               case 7:/* menuReportes(); */ break;
                case 8: System.out.println("\n<----- Regresando"); break;
                default: System.out.println("la opcion " + op + " no es valida"); break;
             }
@@ -242,7 +242,7 @@ public class gestionProductos{
          op = leer.Entero("Opcion");
          switch(op){
             case 1: System.out.println("\nImprimiendo Registro de productos");
-               System.out.println("Id - Producto - Precio - Stock");
+               System.out.println("\nId - Producto - Precio - Stock");
                this.imprimir();
                break;
             case 2:
@@ -250,8 +250,8 @@ public class gestionProductos{
                p = new producto(leer.Entero("Codigo del producto"));
                stockProd = new stockProducto(p);
                stockProd = this.getStockProducto(stockProd);
-               System.out.println("\nId - Producto - Precio - Stock");
                if(stockProd != null){
+                  System.out.println("\nId - Producto - Precio - Stock");
                   stockProd.imprimir();break;
                } else {
                   System.out.println("\nEl producto con codigo " +  p.getIdProducto()+ " no esta registrado");
@@ -266,5 +266,4 @@ public class gestionProductos{
       gestionProductos productos = new gestionProductos();
       productos.gestionar();
    }
-   
 }
