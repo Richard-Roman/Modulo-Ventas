@@ -38,7 +38,7 @@ public abstract class persona{
          return false;
       }
    }
-   
+
    // evalua si un objeto tiene datos o esta vacio
    public int estaLleno(){
       if(getNombre() == null){
