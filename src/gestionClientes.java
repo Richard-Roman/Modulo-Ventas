@@ -15,7 +15,7 @@ public class gestionClientes{
       op = leer.Entero("Opcion"); // llamamos al metodo de la clase Leer y le damos parametros 
             switch(op){
                case 1: registrarCliente(); break; // llamamos al metodo para registrar un nuevo cliente 
-               case 2: buscarCliente(); break;
+               case 2: buscarCliente(); break; // llamamos al metodo buscar un cliente 
                case 3: menuModificar(); break;
                case 4: menuEliminarCliente(); break;
                case 5: menuImprimir(); break;
@@ -61,14 +61,39 @@ public class gestionClientes{
       }
       return false;
    }
+   
+   
+   
+   // metodo para buscar un cliente en la lista
+   private void buscarCliente(){
+      int op = 0;
+      do{
+         System.out.println("\n------> BUSCAR CLIENTE <------");
+         System.out.println("\n1. Iniciar Busqueda\n2. Regresar al menu anterior");
+         op = leer.Entero("Opcion");
+         switch(op){
+            case 1:
+               System.out.println("\nSeleccione el cliente a buscar");
+               cl = cliente.crearCliente();
+               if(this.estaRegistrado(cl)){
+                  System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " si esta registrado");
+               } else {
+                  System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " no esta registrado");
+               }
+               break;
+            case 2: System.out.println("\n<----- Regresando"); break;
+            default: System.out.println("la opcion " + op + " no es valida"); break;
+         }
+      }while(op!=2);
+   }
 
 
    public void setCliente(cliente c){
-      if(this.estaRegistrado(c)){
+      if(!this.estaRegistrado(c)){
          registroClientes.add(c);
          System.out.println("El cliente " + c.getNombre() + " se registro con exito");
       } else {
-         System.out.println("El cliente " + c.getNombre() + " ta esta registrado\nNo se realizara ningun cambio");
+         System.out.println("El cliente " + c.getNombre() + " ya esta registrado\nNo se realizara ningun cambio");
       }
    }
    
@@ -102,28 +127,7 @@ public class gestionClientes{
    
    
    
-   private void buscarCliente(){
-      int op = 0;
-      do{
-         System.out.println("\n------> BUSCAR CLIENTE <------");
-         System.out.println("\n1. Iniciar Busqueda\n2. Regresar al menu anterior");
-         op = leer.Entero("Opcion");
-         switch(op){
-            case 1:
-               System.out.println("\nSeleccione el cliente a buscar");
-               cl = cliente.crearCliente();
-               if(this.estaRegistrado(cl)){
-                  System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " si esta registrado");
-               } else {
-                  System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " no esta registrado");
-               }
-               break;
-            case 2: System.out.println("\n<----- Regresando"); break;
-            default: System.out.println("la opcion " + op + " no es valida"); break;
-         }
-      }while(op!=2);
-   }
-   
+   // modificar un cliente 
    public void menuModificar(){
    int op = 0;
       do{
