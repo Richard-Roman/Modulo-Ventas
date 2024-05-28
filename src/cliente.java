@@ -35,6 +35,7 @@ public class cliente extends persona {
       }
    }
    
+   // metodo para verificar si el objeto tiene RUC 
    public boolean tieneRuc(){
       if(this.getTipoId().equalsIgnoreCase("ruc")){
          return true;
@@ -43,6 +44,7 @@ public class cliente extends persona {
       }
    }
    
+   // metodo para completar el registro del cliente 
    public static cliente completarRegistro(cliente c){
          while(c.estaLleno()!=0){
             switch(c.estaLleno()){
