@@ -2,8 +2,67 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class gestionClientes{
+   // crea una lista Set con paremetros de la clase cliente 
    private Set<cliente> registroClientes = new HashSet<>();
-   cliente cl;
+   cliente cl; // variable que hace referencia a la clase cliente 
+
+   // Metodo para gestionar los clientes 
+   public void gestionar(){
+      int op = 0;
+      do{
+      System.out.println("\n---> GESTION DE CLIENTES <---");
+      System.out.println("1. Registrar cliente\n2. Buscar cliente\n3. Modificar cliente\n4. Eliminar cliente\n5. Imprimir\n6. Regresar al menu principal");
+      op = leer.Entero("Opcion"); // llamamos al metodo de la clase Leer y le damos parametros 
+            switch(op){
+               case 1: registrarCliente(); break; // llamamos al metodo para registrar un nuevo cliente 
+               case 2: buscarCliente(); break;
+               case 3: menuModificar(); break;
+               case 4: menuEliminarCliente(); break;
+               case 5: menuImprimir(); break;
+               case 6: System.out.println("\n<----- Regresando"); break;
+               default: System.out.println("la opcion " + op + " no es valida"); break;
+            }
+      } while(op!=6);
+   }
+
+   private void registrarCliente(){
+      int op = 0;
+         do{
+            System.out.println("\n----> REGISTRAR CLIENTE <----");
+            System.out.println("\n1. Iniciar registro \n2. Regresar al menu anterior");
+            op = leer.Entero("Opcion"); // llamamos al metodo entero de la clase Leer 
+            switch(op){
+               case 1: System.out.println("\nRegistrando nuevo cliente");
+                  cl = cliente.crearCliente(); // llamamos al metodo crear cliente de la clase cliente que devulve un objeto 
+
+                  // comparaos si el objeto del cliente creado ya esta en la lista 
+                  if(!this.estaRegistrado(cl)){ // llamamos al metodo estaregistrado y le pasamos el objeto del cliente creado
+                     // si es diferente de verdadero se agrega a la lista de clientes 
+                     cl = cliente.completarRegistro(cl); // enviamos el objeto para completar el registro de datos de la clase cliente 
+                     registroClientes.add(cl);
+                     System.out.println("\nRegistro exitoso");
+                  } else {
+                     System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " ya esta registrado");
+                  }
+                  break;
+               case 2: System.out.println("\n<----- Regresando"); break;
+               default: System.out.println("la opcion " + op + " no es valida"); break;
+            }
+         }while(op!=2);
+      }
+   
+
+   // metodo para ver si un objeto ya existe en la lista 
+   public boolean estaRegistrado(cliente c){ // recibimos de parametros el objeto creado del cliente 
+      for(cliente i: registroClientes){ // recorremos la lista de clientes que tiene objetos en si 
+         if(i.esIgual(c)){ // llamamos al metodo esIgual de la clase cliente y le pasamos el objeto creado del nuevo cliente 
+            return true;
+         }
+      }
+      return false;
+   }
+
+
    public void setCliente(cliente c){
       if(this.estaRegistrado(c)){
          registroClientes.add(c);
@@ -13,14 +72,7 @@ public class gestionClientes{
       }
    }
    
-   public boolean estaRegistrado(cliente c){
-      for(cliente i: registroClientes){
-         if(i.esIgual(c)){
-            return true;
-         }
-      }
-      return false;
-   }
+   
    
    public cliente getCliente(cliente c){
       for(cliente i: registroClientes){
@@ -47,46 +99,8 @@ public class gestionClientes{
       }
    }
    
-   public void gestionar(){
-      int op = 0;
-      do{
-      System.out.println("\n---> GESTION DE CLIENTES <---");
-      System.out.println("1. Registrar cliente\n2. Buscar cliente\n3. Modificar cliente\n4. Eliminar cliente\n5. Imprimir\n6. Regresar al menu principal");
-      op = leer.Entero("Opcion");
-            switch(op){
-               case 1: registrarCliente(); break;
-               case 2: buscarCliente(); break;
-               case 3: menuModificar(); break;
-               case 4: menuEliminarCliente(); break;
-               case 5: menuImprimir(); break;
-               case 6: System.out.println("\n<----- Regresando"); break;
-               default: System.out.println("la opcion " + op + " no es valida"); break;
-            }
-      } while(op!=6);
-   }
    
-   private void registrarCliente(){
-   int op = 0;
-      do{
-         System.out.println("\n----> REGISTRAR CLIENTE <----");
-         System.out.println("\n1. Iniciar registro \n2. Regresar al menu anterior");
-         op = leer.Entero("Opcion");
-         switch(op){
-            case 1: System.out.println("\nRegistrando nuevo cliente");
-               cl = cliente.crearCliente();
-               if(!this.estaRegistrado(cl)){
-                  cl = cliente.completarRegistro(cl);
-                  registroClientes.add(cl);
-                  System.out.println("\nRegistro exitoso");
-               } else {
-                  System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " ya esta registrado");
-               }
-               break;
-            case 2: System.out.println("\n<----- Regresando"); break;
-            default: System.out.println("la opcion " + op + " no es valida"); break;
-         }
-      }while(op!=2);
-   }
+   
    
    private void buscarCliente(){
       int op = 0;
