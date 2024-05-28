@@ -56,13 +56,18 @@ public class producto {
       }
     }
    
-   // Metodo staticos para crear nueovs objetos a partid de la clase
+   // Metodo staticos para crear nueovs objetos a partir de la clase
     
     public static producto crearProducto(){
       System.out.println("Ingrese los siguientes datos:");
       int idProducto = leer.Entero("Codigo del producto");
-      String nombre = leer.Cadena("Nombre");
-      producto p = new producto(idProducto,nombre);
+      producto p = new producto(idProducto);
       return p;
     }
+    
+    public static producto completarRegistro(producto p){
+      p.setNombre(leer.Cadena("Nombre")); 
+      return p;
+    }
+    
 }

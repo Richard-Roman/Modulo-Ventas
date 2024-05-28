@@ -72,6 +72,7 @@ public class stockProducto{
    
    public static stockProducto completarRegistro(stockProducto sp){
       producto p = sp.getProducto();
+      p = producto.completarRegistro(p);
       p.setPrecio(leer.Decimal("Precio"));
       sp.setStock(leer.Entero("Stock"));
       return sp;
