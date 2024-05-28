@@ -29,7 +29,7 @@ public class stockProducto{
    }
    
    public String toString(){
-      return prod.toString() + stock;
+      return prod.toString() + " - " + stock;
    }
    
    public void encabezadaImprimir(){

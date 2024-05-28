@@ -190,7 +190,12 @@ public class gestionClientes{
             case 1: System.out.println("\nSeleccione el cliente a eliminar");
                cl = cliente.crearCliente();
                cl = this.getCliente(cl);
-               this.eliminarCliente(cl);
+               if(cl != null){
+                  this.eliminarCliente(cl);
+                  System.out.println("\nEliminacion exitosa");
+               } else {
+                  System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " no esta registrado");
+               }
                break;
             case 2:System.out.println("\n<----- Regresando"); break;
             default: System.out.println("la opcion " + op + " no es valida"); break;          
@@ -209,14 +214,14 @@ public class gestionClientes{
                this.imprimir();
                break;
             case 2:
-               System.out.println("\nSeleccione el cliente a eliminar");
+               System.out.println("\nSeleccione el cliente a imprimir");
                cl = cliente.crearCliente();
                cl = this.getCliente(cl);
-               if(cl == null){
+               if(cl != null){
                   cl.imprimir(); break;
                } else {
                   System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " no esta registrado");
-               }
+               } break;
             case 3:System.out.println("\n<----- Regresando"); break;
             default: System.out.println("la opcion " + op + " no es valida"); break;          
          }
