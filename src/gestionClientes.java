@@ -210,7 +210,7 @@ public class gestionClientes{
          System.out.println("\n1. Imprimir todo\n2. Imprimir un cliente\n3. Regresar al menu anterior");
          op = leer.Entero("Opcion");
          switch(op){
-            case 1: System.out.println("\n Imprimiendo Registro de Clientes");
+            case 1: System.out.println("\nImprimiendo Registro de Clientes");
                this.imprimir();
                break;
             case 2:
