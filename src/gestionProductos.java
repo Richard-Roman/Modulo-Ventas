@@ -63,8 +63,8 @@ public class gestionProductos{
                case 1:registrarProducto(); break;
                case 2:menuBuscar(); break;
                case 3:menuModificar(); break;
-               case 4:// menuEliminar(); break;
-               case 5:// menuImprimir(); break;
+               case 4: menuEliminar(); break;
+               case 5: menuImprimir(); break;
                case 6:// menuConsultas(); break;
                case 7:// menuReportes(); break;
                case 8: System.out.println("\n<----- Regresando"); break;
@@ -190,7 +190,7 @@ public class gestionProductos{
          sp.encabezadaImprimir();
          sp.imprimir();
          System.out.println("\nModificar Stock");
-         System.out.println("\n1. Agregar existencias\n2. Disminuir Existencias " + "\n3 Establecer Stock" + "\n4. Regresar al menu anterior");
+         System.out.println("\n1. Agregar existencias\n2. Disminuir Existencias " + "\n3. Establecer Stock" + "\n4. Regresar al menu anterior");
          op = leer.Entero("Opcion");
          switch(op){
             case 1: System.out.println("\nAgregando Existencias");
@@ -210,6 +210,57 @@ public class gestionProductos{
       }while(op!=4);
    }
    
+   public void menuEliminar(){
+      int op = 0;
+      do{
+         System.out.println("\n----> ELIMINAR PRODUCTO <----");
+         System.out.println("\n1. Seleccionar producto a eliminar\n2. Regresar al menu anterior");
+         op = leer.Entero("Opcion");
+         switch(op){
+            case 1: System.out.println("\nSeleccione el producto a eliminar");
+               p = new producto(leer.Entero("Codigo del producto"));
+               stockProd = new stockProducto(p);
+               stockProd = this.getStockProducto(stockProd);
+               if(stockProd != null){
+                  this.eliminarStockProducto(stockProd);
+                  System.out.println("\nEliminacion Exitosa");
+               } else {
+                  System.out.println("\nEl producto con codigo " +  p.getIdProducto()+ " no esta registrado");
+               }
+               break;
+            case 2:System.out.println("\n<----- Regresando"); break;
+            default: System.out.println("la opcion " + op + " no es valida"); break;          
+         }
+      }while(op!=2);
+   }
+   
+   public void menuImprimir(){
+   int op = 0;
+      do{
+         System.out.println("\n----> IMPRIMIR <----");
+         System.out.println("\n1. Imprimir todo\n2. Imprimir un producto\n3. Regresar al menu anterior");
+         op = leer.Entero("Opcion");
+         switch(op){
+            case 1: System.out.println("\nImprimiendo Registro de productos");
+               System.out.println("Id - Producto - Precio - Stock");
+               this.imprimir();
+               break;
+            case 2:
+               System.out.println("\nSeleccione el producto a imprimir");
+               p = new producto(leer.Entero("Codigo del producto"));
+               stockProd = new stockProducto(p);
+               stockProd = this.getStockProducto(stockProd);
+               System.out.println("\nId - Producto - Precio - Stock");
+               if(stockProd != null){
+                  stockProd.imprimir();break;
+               } else {
+                  System.out.println("\nEl producto con codigo " +  p.getIdProducto()+ " no esta registrado");
+               }break;
+            case 3:System.out.println("\n<----- Regresando"); break;
+            default: System.out.println("la opcion " + op + " no es valida"); break;          
+         }
+      }while(op!=3);
+   }
    
    public static void main(String args[]){
       gestionProductos productos = new gestionProductos();
