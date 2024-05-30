@@ -28,8 +28,10 @@ public abstract class persona{
       }
    // metodo ToString que devuelve los datos almacenados 
    public String toString(){
-      return id + " - Nombre" + nombre +  " - Telefono: " + telefono;
+      return id + " - Nombre: " + nombre +  " - Telefono: " + telefono;
    }
+
+   
    // compara dos objetos de la clase persona 
    public boolean esIgual(persona b){// recibe de parametro un objeto de tipo Persona 
       if(this.getId() == b.getId()){ // comparav el ID de la clase con el Id del objeto 

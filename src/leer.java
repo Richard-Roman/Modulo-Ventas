@@ -1,6 +1,7 @@
 import java.util.Scanner;
 public class leer{
    private static Scanner Sc = new Scanner(System.in);
+   
    public static int Entero(String txt){
       System.out.print(txt + ": ");
       int e = Sc.nextInt();

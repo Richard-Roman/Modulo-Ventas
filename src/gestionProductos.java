@@ -63,8 +63,8 @@ public class gestionProductos{
                case 1:registrarProducto(); break;
                case 2:menuBuscar(); break;
                case 3:menuModificar(); break;
-               case 4: menuEliminar(); break;
-               case 5: menuImprimir(); break;
+               case 4:menuEliminar(); break;
+               case 5:menuImprimir(); break;
                case 6:/* menuConsultas();*/ break;
                case 7:/* menuReportes(); */ break;
                case 8: System.out.println("\n<----- Regresando"); break;

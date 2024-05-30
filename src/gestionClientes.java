@@ -61,9 +61,7 @@ public class gestionClientes{
       }
       return false;
    }
-   
-   
-   
+    
    // metodo para buscar un cliente en la lista
    private void buscarCliente(){
       int op = 0;
@@ -123,9 +121,6 @@ public class gestionClientes{
          i.imprimir();
       }
    }
-   
-   
-   
    
    // modificar un cliente 
    public void menuModificar(){
