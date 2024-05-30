@@ -2,8 +2,10 @@ public class producto {
     private int idProducto;
     private String nombre;
     private double precio;
-
+    
     public producto() { // Constructor
+        
+
     }
     public producto(int idProducto, String nombre) { // Constructor
         this.idProducto = idProducto;
