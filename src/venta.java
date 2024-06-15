@@ -6,12 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import javax.swing.table.DefaultTableModel;
 import javax.swing.border.*;
 
 public class venta {
-    private Scanner Sc = new Scanner(System.in);
     private String ID, FechaEmicion,  Observaciones;
     private double total;
     public cliente c = new cliente();
@@ -72,43 +70,13 @@ public class venta {
 
 
     public void LlenarProductos(){
-        boolean terminar = false;
-        Sc.useDelimiter("\\s+");
        
-        System.out.println("|id | Nombre  |P.Unit| Cantidad |");
-        System.out.println("----------------------------------------------------------------------");
-        do{
-            System.out.print("  ");
-            producto producto = new producto();
-            detalleVenta dt = new detalleVenta();
-            String control = Sc.next();
-            if (!control.equals("terminar")){
-                int id = Integer.parseInt(control);
-                String nombre = Sc.next();
-                double precio = Sc.nextDouble(); 
-                double cantidad = Sc.nextDouble(); 
-                producto.setIdProducto(id);producto.setNombre(nombre); producto.setPrecio(precio);
-                dt.setProducto(producto);dt.setCantidad(cantidad);
-                this.Registventa.add(dt);
-            }else{
-                terminar=true;
-            }
+    }
 
-        }while(!terminar);
-     }
-    public void LlenarVenta(){
-        System.out.println("----------------------------------------------------------------------");
-        setID(leer.Cadena("                      Venta N°"));
-        System.out.println("----------------------------------------------------------------------");
-        setFechaEmicion(leer.Cadena("                                          Fecha"));
-        String nombre = leer.Cadena("Señor(es)      ");
-        String Tipoid = leer.Cadena("Tipo Documento ");
-        Integer id = leer.Entero("N° "+Tipoid+" ");
-        System.out.println("----------------------------------------------------------------------");
-        LlenarProductos();
-        System.out.println("----------------------------------------------------------------------");
-
-        this.c.setNombre(nombre);this.c.setTipoId(Tipoid); this.c.setId(id);
+    public static void CrearVenta(){  
+        VentanaVenta ventana = new VentanaVenta();    
+        ventana.agregarCodVenta(agregarIdVenta(numeroVentas));
+        ventana.agregarFecha(agregarFecha());
     }
 
 
@@ -127,25 +95,7 @@ public class venta {
     }
 
     public void MostrarVenta(){
-        System.out.println("----------------------------------------------------------------------");
-        System.out.println("                      Venta N° "+getID());
-        System.out.println("----------------------------------------------------------------------");
-        System.out.println("                                          Fecha: "+getFechaEmicion());
-        System.out.println("Señor(es)      "+ this.c.getNombre());
-        System.out.println("Tipo Documento "+ this.c.getTipoId());
-        if(c.tieneRuc()){
-            System.out.println("N° RUC: "+ this.c.getId());
-        }else{
-            System.out.println("N° DNI: "+ this.c.getId());
-        }
-        System.out.println("----------------------------------------------------------------------");
-        System.out.println("|id  | Nombre   | P.Unit | Cantidad |");
-        System.out.println("----------------------------------------------------------------------");
-        
-        for (detalleVenta dt: Registventa){
-            dt.mostrarDetalle();
-        }
-        System.out.println("----------------------------------------------------------------------");
+ 
     }
 
     public static String agregarIdVenta(ArrayList<String> numeroVentas){
@@ -170,12 +120,13 @@ public class venta {
     public static void main(String[] args) {
         //venta venta = new venta();venta.LlenarVenta();venta.MostrarVenta();
         //new ventanaVenta();
-        new VentanaVenta();
+        venta vn = new venta();
+        venta.CrearVenta();
     }
 }
 
 
-class VentanaVenta extends JFrame {
+/*class VentanaVenta extends JFrame {
         private JPanel encabezado;
         private JLabel lblCodVenta, lblFecha, lblCliente, lblTipoDocumento,lblDocumento, lblVendedor, lblTotal;
         private JTextField txtCodVenta, txtFecha, txtCliente, txtTipoDocumento, txtDocumento, txtTotal;
@@ -302,7 +253,7 @@ class VentanaVenta extends JFrame {
             setVisible(true);
         }
 
-    }
+    }*/
 
 
 
