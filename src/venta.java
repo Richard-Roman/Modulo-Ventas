@@ -10,24 +10,23 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.border.*;
 
 public class venta {
-    private String ID, FechaEmicion,  Observaciones;
+    private String CodVenta, FechaEmicion,  Observaciones;
     private double total;
     public cliente c = new cliente();
-    private vendedor vendedor = new vendedor();
+    public vendedor v = new vendedor();
     private Set<detalleVenta> Registventa = new LinkedHashSet<>();
     public static ArrayList<String> numeroVentas = new ArrayList<>(Arrays.asList("001", "002", "003", "004"));
     
 
-    public venta(){
-
+    public venta(){  
     }
 
     public ArrayList<String> getNumeroVentas() {
         return numeroVentas;
     }
 
-    public String getID() {
-        return ID;
+    public String getCodVenta() {
+        return CodVenta;
     }
     public String getFechaEmicion() {
         return FechaEmicion;
@@ -38,6 +37,9 @@ public class venta {
     public Set<detalleVenta> getRegistventa() {
         return Registventa;
     }
+    public void agragarRegistro(detalleVenta registro){
+        this.Registventa.add(registro);
+    }
     public double getTotal() {
         return total;
     }
@@ -45,11 +47,11 @@ public class venta {
         return c;
     }
     public vendedor getVendedor() {
-        return vendedor;
+        return v;
     }
 
-    public void setID(String iD) {
-        ID = iD;
+    public void setCodVenta(String codVenta) {
+        CodVenta = codVenta;
     }
     public void setFechaEmicion(String fechaEmicion) {
         FechaEmicion = fechaEmicion;
@@ -64,7 +66,7 @@ public class venta {
         this.c = cliente;
     }
     public void setVendedor(vendedor vendedor) {
-        this.vendedor = vendedor;
+        this.v = vendedor;
     }
 
 
@@ -74,18 +76,13 @@ public class venta {
     }
 
     public static void CrearVenta(){  
-        VentanaVenta ventana = new VentanaVenta();    
-        ventana.agregarCodVenta(agregarIdVenta(numeroVentas));
-        ventana.agregarFecha(agregarFecha());
-    }
-
-
-    public void CompovarVenta(){
 
     }
 
-    public void EditarVenta(){
-        
+ 
+
+
+    public void verificarVenta(){
 
     }
 
@@ -94,9 +91,7 @@ public class venta {
 
     }
 
-    public void MostrarVenta(){
- 
-    }
+
 
     public static String agregarIdVenta(ArrayList<String> numeroVentas){
         String ultimoElemento;
@@ -104,24 +99,54 @@ public class venta {
             ultimoElemento = numeroVentas.get(numeroVentas.size() - 1);
             return ultimoElemento;
         } else {
-            System.out.println("El ArrayList está vacío.");
+            System.out.println("001");
             return null;
         }    
     }
-    public static String agregarFecha(){
-        LocalDate fechaActual = LocalDate.now();
-        // Formatear la fecha actual
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaFormateada = fechaActual.format(formatter);
-        // Mostrar la fecha formateada
-        return fechaFormateada;
-    }
+
     
     public static void main(String[] args) {
         //venta venta = new venta();venta.LlenarVenta();venta.MostrarVenta();
         //new ventanaVenta();
         venta vn = new venta();
         venta.CrearVenta();
+    }
+}
+
+
+
+
+class AdvancedTooltipExample {
+    public static void main(String[] args) {
+        // Configurar el ToolTipManager
+        ToolTipManager.sharedInstance().setInitialDelay(500); // Tiempo de espera antes de mostrar el tooltip (ms)
+        ToolTipManager.sharedInstance().setDismissDelay(5000); // Tiempo antes de que desaparezca el tooltip (ms)
+
+        // Crear el marco (ventana)
+        JFrame frame = new JFrame("Ejemplo Avanzado de Tooltip");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        
+        // Crear el panel
+        JPanel panel = new JPanel(new FlowLayout());
+        
+        // Crear un JLabel con tooltip
+        JLabel label = new JLabel("Pasa el mouse por aquí");
+        label.setToolTipText("Este es un JLabel con un tooltip avanzado");
+
+        // Crear un JTextField con tooltip
+        JTextField textField = new JTextField(15);
+        textField.setToolTipText("Este es un JTextField con un tooltip avanzado");
+        
+        // Añadir los componentes al panel
+        panel.add(label);
+        panel.add(textField);
+        
+        // Añadir el panel al marco
+        frame.add(panel);
+        
+        // Hacer visible el marco
+        frame.setVisible(true);
     }
 }
 

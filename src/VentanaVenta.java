@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.border.*;
 
@@ -14,6 +17,13 @@ public class VentanaVenta extends JFrame{
         private JTextField txtCodVenta, txtFecha, txtCliente, txtTipoDocumento, txtDocumento, txtTotal;
         private JPanel registros;
         private JComboBox<String> vendedor;
+        private JTable table;
+        private DefaultTableModel model;
+
+        private venta vn = new venta();
+        private boolean isSave=false;
+
+        public static ArrayList<String> numeroVentas = new ArrayList<>(Arrays.asList("001", "002", "003", "004"));
 
         public VentanaVenta() {
             setTitle("Nueva Venta");
@@ -90,13 +100,24 @@ public class VentanaVenta extends JFrame{
             encabezado.add(headerPanel, BorderLayout.NORTH);
             add(encabezado,BorderLayout.NORTH);
 
+
+        //Panel para el centro, contendra los registros y los botones verificar y salvar
+            JPanel registrosPanel =new JPanel(new BorderLayout());
+            //Creamos el panel que contendra a los botones de las funcionalidades
+            JPanel panelBotones2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            JButton verificar2 = new JButton("Verificar");
+            JButton salvar2 = new JButton("Salvar");
+            panelBotones2.add(verificar2);
+            panelBotones2.add(salvar2);
+            registrosPanel.add(panelBotones2, BorderLayout.NORTH);
+
             //Creamos el panel para los registros
             registros = new JPanel(new BorderLayout());
             registros.setBorder(BorderFactory.createTitledBorder("Registros de Venta"));
             // Definir el modelo de la tabla con datos de ejemplo
             String[] columnNames = {"ID", "Nombre", "P.Unit", "Cantidad", "Subtotal"};
-            DefaultTableModel model = new DefaultTableModel(columnNames, 16); // 10 filas, 5 columnas
-            JTable table = new JTable(model);
+            model = new DefaultTableModel(columnNames, 16); // 10 filas, 5 columnas
+            table = new JTable(model);
             // Personalizar la tabla
             table.setCellSelectionEnabled(true); // Habilitar la selección de celdas
             table.setShowGrid(true); // Mostrar las líneas de la cuadrícula
@@ -110,35 +131,133 @@ public class VentanaVenta extends JFrame{
             txtTotal = new JTextField(9);
             totalPanel.add(lblTotal, BorderLayout.WEST);
             totalPanel.add(txtTotal, BorderLayout.EAST);
-
     
             // Agregar la tabla a un JScrollPane para agregar capacidades de desplazamiento
             JScrollPane scrollPane = new JScrollPane(table);
             registros.add(scrollPane, BorderLayout.CENTER);
             registros.add(totalPanel, BorderLayout.SOUTH);
+            registrosPanel.add(registros,BorderLayout.CENTER);
+
+            add(registrosPanel,BorderLayout.CENTER);
 
 
             //Creamos el panel que contendra a los botones de las funcionalidades
             JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            JButton verificar = new JButton("Verificar");
-            JButton salvar = new JButton("Salvar");
             JButton guardar = new JButton("Guardar");
-            panelBotones.add(verificar);
-            panelBotones.add(salvar);
+            JButton cancelar = new JButton("Cancelar");
             panelBotones.add(guardar);
+            panelBotones.add(cancelar);
+
             add(panelBotones, BorderLayout.SOUTH);
     
             // Añadir el panel de registros a la ventana
-            add(registros, BorderLayout.CENTER);
             setVisible(true);
         }
+        public VentanaVenta(venta vtn){
+            VentanaVenta ventana = new VentanaVenta();
+            this.vn = vtn;
+            //Agregar los datos de la venta en los campos de la ventana
+        }
+
+
+    public String getTxtFecha() {
+        return this.txtFecha.getText();
+    }
+    public String gettxtCodVenta() {
+        return this.txtCodVenta.getText();
+    }
+
+    public String gettxtCliente() {
+        return this.txtCliente.getText();
+    }
+    public String gettxtTipoDocumento() {
+        return this.txtTipoDocumento.getText();
+    }
+    public String gettxtDocumento() {
+        return this.txtDocumento.getText();
+    }
+    public String gettxtVendedor() {
+        return (String) vendedor.getSelectedItem();
+    }
+    public String getTxtTotal() {
+        return this.txtTotal.getText();
+    }
 
     public void agregarCodVenta(String codigo){
         this.txtCodVenta.setText(codigo);
     }
+    public void agregarCodUltimaVenta(ArrayList<String> numeroVentas){
+        String ultimoElemento;
+        if (!numeroVentas.isEmpty()) {
+            ultimoElemento = numeroVentas.get(numeroVentas.size() - 1);
+            this.txtCodVenta.setText(ultimoElemento);
+        } else {
+            this.txtCodVenta.setText("001");
+        }  
+    }
 
-    public void agregarFecha(String fechaActual){
-        this.txtFecha.setText(fechaActual);
+    public void agregarFecha(String fecha){
+        this.txtFecha.setText(fecha);
+    }
+    public void agregarFechaActual(){
+        LocalDate fechaactual = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaFormateada = fechaactual.format(formatter);
+        this.txtFecha.setText(fechaFormateada);
+    }
+
+    public void setTxtCliente(String NomCliente) {
+        this.txtCliente.setText(NomCliente);
+    }
+    public JTable getTable() {
+        return table;
+    }
+    public int getTableRows(){
+        return model.getRowCount();
+    }
+    public int getTableColums(){
+        return model.getColumnCount();
+    }
+
+
+
+    public  void salvar(){
+        isSave = true;
+        ExtraerEncabezado();
+        ExtraerRegistros();
+    }
+
+    private void ExtraerEncabezado(){
+        this.vn.setCodVenta(gettxtCodVenta());;
+        this.vn.setFechaEmicion(getTxtFecha());
+        this.vn.c.setNombre(gettxtCliente());
+        this.vn.c.setTipoId(gettxtTipoDocumento());
+        this.vn.c.setId(Integer.parseInt( gettxtCliente()));
+        this.vn.v.setNombre(gettxtVendedor()); 
+        this.vn.setTotal(Double.parseDouble(getTxtTotal()));
+    }
+    private void ExtraerRegistros(){
+        
+        for (int rowIndex = 0; rowIndex < getTableRows(); rowIndex++) {
+            detalleVenta dtv = new detalleVenta();
+            // Verificar si la fila tiene datos
+            for (int colIndex = 0; colIndex < getTableColums(); colIndex++) {
+                Object cellData = getTable().getValueAt(rowIndex, colIndex);
+                if (cellData != null && !cellData.toString().trim().isEmpty()) {
+                    dtv.incertEnRegistro(colIndex, cellData.toString());
+                    //rowHasData = true;
+                    break;
+                }
+            }
+            if (dtv!=null){
+                dtv.setFilaRegistro(rowIndex);
+                this.vn.agragarRegistro(dtv);
+            }
+        }
+    }
+
+    public void  verificarCamposVacios(){
+
     }
 
     public static void main(String[] args) {
