@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.border.*;
@@ -14,18 +15,29 @@ import javax.swing.border.*;
 public class VentanaVenta extends JFrame{
         private JPanel encabezado;
         private JLabel lblCodVenta, lblFecha, lblCliente, lblTipoDocumento,lblDocumento, lblVendedor, lblTotal;
+        private JButton verificar, salvar, guardar, cancelar;
         private JTextField txtCodVenta, txtFecha, txtCliente, txtTipoDocumento, txtDocumento, txtTotal;
         private JPanel registros;
         private JComboBox<String> vendedor;
         private JTable table;
         private DefaultTableModel model;
 
-        private venta vn = new venta();
-        private boolean isSave=false;
+        private static venta vn = new venta();
+        //private boolean isSave=false;
 
+        public ArrayList<venta> ventas = new ArrayList<>();
         public static ArrayList<String> numeroVentas = new ArrayList<>(Arrays.asList("001", "002", "003", "004"));
 
         public VentanaVenta() {
+            venta vent = new venta();
+            producto p = new producto(2, "Manzana"); p.setPrecio(2.5);
+            vent.setCodVenta("005");vent.setFechaEmicion("17/06/2024");vent.setCliente(new cliente("Dni",72743196));vent.c.setNombre("Jhon Dalton");
+            detalleVenta dt = new detalleVenta(p,2);
+            vent.getRegistventa().add(dt);
+            ventas.add(vent);
+
+            //-------------------CONSTRUCTOR PARA CREAR UNA VENTANA VASIA---------------------------------------
+
             setTitle("Nueva Venta");
             setSize(500, 700);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,10 +117,10 @@ public class VentanaVenta extends JFrame{
             JPanel registrosPanel =new JPanel(new BorderLayout());
             //Creamos el panel que contendra a los botones de las funcionalidades
             JPanel panelBotones2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            JButton verificar2 = new JButton("Verificar");
-            JButton salvar2 = new JButton("Salvar");
-            panelBotones2.add(verificar2);
-            panelBotones2.add(salvar2);
+            verificar = new JButton("Verificar");
+            salvar = new JButton("Salvar");
+            panelBotones2.add(verificar);
+            panelBotones2.add(salvar);
             registrosPanel.add(panelBotones2, BorderLayout.NORTH);
 
             //Creamos el panel para los registros
@@ -141,10 +153,10 @@ public class VentanaVenta extends JFrame{
             add(registrosPanel,BorderLayout.CENTER);
 
 
-            //Creamos el panel que contendra a los botones de las funcionalidades
+            //Creamos el panel que contendra a los botones guardar y cancelar
             JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            JButton guardar = new JButton("Guardar");
-            JButton cancelar = new JButton("Cancelar");
+            guardar = new JButton("Guardar");
+            cancelar = new JButton("Cancelar");
             panelBotones.add(guardar);
             panelBotones.add(cancelar);
 
@@ -152,21 +164,30 @@ public class VentanaVenta extends JFrame{
     
             // Añadir el panel de registros a la ventana
             setVisible(true);
-        }
-        public VentanaVenta(venta vtn){
-            VentanaVenta ventana = new VentanaVenta();
-            this.vn = vtn;
-            //Agregar los datos de la venta en los campos de la ventana
+
+            //
+            salvar.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                    salvar();
+                }
+            });
+
+            guardar.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                    guardar();
+                }
+            });
         }
 
 
+
+    //-------------------------------------------GETTERS----------------------------------------------------------
     public String getTxtFecha() {
         return this.txtFecha.getText();
     }
     public String gettxtCodVenta() {
         return this.txtCodVenta.getText();
     }
-
     public String gettxtCliente() {
         return this.txtCliente.getText();
     }
@@ -182,7 +203,17 @@ public class VentanaVenta extends JFrame{
     public String getTxtTotal() {
         return this.txtTotal.getText();
     }
+    public JTable getTable() {
+        return table;
+    }
+    public int getTableRows(){
+        return model.getRowCount();
+    }
+    public int getTableColums(){
+        return model.getColumnCount();
+    }
 
+    //----------------------------------------------SETTERS-----------------------------------------------
     public void agregarCodVenta(String codigo){
         this.txtCodVenta.setText(codigo);
     }
@@ -195,7 +226,6 @@ public class VentanaVenta extends JFrame{
             this.txtCodVenta.setText("001");
         }  
     }
-
     public void agregarFecha(String fecha){
         this.txtFecha.setText(fecha);
     }
@@ -205,39 +235,79 @@ public class VentanaVenta extends JFrame{
         String fechaFormateada = fechaactual.format(formatter);
         this.txtFecha.setText(fechaFormateada);
     }
-
     public void setTxtCliente(String NomCliente) {
         this.txtCliente.setText(NomCliente);
     }
-    public JTable getTable() {
-        return table;
+    public void setTxtTipoDocumento(String tipoDocumento) {
+        this.txtTipoDocumento.setText(tipoDocumento);
     }
-    public int getTableRows(){
-        return model.getRowCount();
+    public void setTxtDocumento(String Documento) {
+        this.txtDocumento.setText(Documento);
     }
-    public int getTableColums(){
-        return model.getColumnCount();
+    public void setTxtVendedor(String vendedor) {
+        this.vendedor.addItem(vendedor);
+    }
+    public void setTxtTotal(String total) {
+        this.txtTotal.setText(total);
+    }   
+    public void setTable(JTable table) {
+        this.table = table;
+    }
+
+
+    //-------------------------------------METODOS PARA MOSTRAR UN VENTA------------------------------------------------------
+    public void mostarVenta(venta vtn){
+        VentanaVenta ventana = new VentanaVenta();
+        ventana.setTitle("Venta");
+        vn = vtn;
+        //Agregar los datos de la venta en los campos de la ventana
+        ventana.agregarCampos(ventana, vtn);
+        //Agregamos los Registro a la JTable
+        ventana.agregarRegistrosJTable(ventana,vtn.getRegistventa());
+        //Inabilitamos los botones 
+    }
+
+    public void agregarCampos(VentanaVenta ventana, venta vtn){
+        ventana.agregarCodVenta(vtn.getCodVenta());
+        ventana.agregarFecha(vtn.getFechaEmicion());
+        ventana.setTxtCliente(vtn.getCliente().getNombre());
+        ventana.setTxtTipoDocumento(vtn.getCliente().getTipoId());
+        ventana.setTxtDocumento(String.valueOf(vtn.getCliente().getId()));
+        ventana.setTxtVendedor(vtn.getVendedor().getNombre());
+    }
+
+    public void agregarRegistrosJTable(VentanaVenta VtnV,Set<detalleVenta> Registventa){
+        for(detalleVenta dtv : Registventa){
+            int fila = dtv.getFilaRegistro();
+            VtnV.table.getModel().setValueAt(dtv.producto.getIdProducto(), fila, 0);
+            VtnV.table.getModel().setValueAt(dtv.producto.getNombre(), fila, 1);
+            VtnV.table.getModel().setValueAt(dtv.producto.getPrecio(), fila, 2);
+            VtnV.table.getModel().setValueAt(dtv.getCantidad(), fila, 3);
+            VtnV.table.getModel().setValueAt(dtv.getSubTotal(), fila, 4);
+        }
     }
 
 
 
-    public  void salvar(){
-        isSave = true;
-        ExtraerEncabezado();
-        ExtraerRegistros();
+    //------------------------------------------------METODOS PARA EDITAR UNA VENTA--------------------------------------------
+    public void editarVenta(venta vtn){
+        mostarVenta(vtn);
+        guardar();
     }
+
+
+    //--------------------------MOTODOS PARA COMPROVAR Y GUARDAR LOS DATOS DE LA VENTANA--------------------------------------
 
     private void ExtraerEncabezado(){
-        this.vn.setCodVenta(gettxtCodVenta());;
-        this.vn.setFechaEmicion(getTxtFecha());
-        this.vn.c.setNombre(gettxtCliente());
-        this.vn.c.setTipoId(gettxtTipoDocumento());
-        this.vn.c.setId(Integer.parseInt( gettxtCliente()));
-        this.vn.v.setNombre(gettxtVendedor()); 
-        this.vn.setTotal(Double.parseDouble(getTxtTotal()));
+        vn.setCodVenta(gettxtCodVenta());;
+        vn.setFechaEmicion(getTxtFecha());
+        vn.c.setNombre(gettxtCliente());
+        vn.c.setTipoId(gettxtTipoDocumento());
+        vn.c.setId(Integer.parseInt(gettxtDocumento()));
+        vn.v.setNombre(gettxtVendedor()); 
+        vn.setTotal(Double.parseDouble(getTxtTotal()));
     }
     private void ExtraerRegistros(){
-        
         for (int rowIndex = 0; rowIndex < getTableRows(); rowIndex++) {
             detalleVenta dtv = new detalleVenta();
             // Verificar si la fila tiene datos
@@ -251,7 +321,7 @@ public class VentanaVenta extends JFrame{
             }
             if (dtv!=null){
                 dtv.setFilaRegistro(rowIndex);
-                this.vn.agragarRegistro(dtv);
+                vn.agragarRegistro(dtv);
             }
         }
     }
@@ -260,10 +330,32 @@ public class VentanaVenta extends JFrame{
 
     }
 
+    //-----------------------------METODOS QUE USARAN LOS BOTONES----------------------------------------------------
+    public void verificar(){
+
+    }
+    public  void salvar(){
+        //isSave = true;
+        ExtraerEncabezado();
+        ExtraerRegistros();
+
+    }
+    public void guardar(){
+        salvar();
+        ventas.add(vn);
+        System.out.println("guardando venta");
+        System.out.println(ventas.get(0).getCodVenta()+ventas.get(0).getFechaEmicion()+ventas.get(0).getCliente().getNombre()+ventas.get(0).getVendedor().getNombre() );
+        //return this.vn;
+    }
+    public void cancelar(){
+
+    }
+
+
     public static void main(String[] args) {
-        //venta venta = new venta();venta.LlenarVenta();venta.MostrarVenta();
-        //new ventanaVenta();
-        new VentanaVenta();
-        }
-    
+    //new VentanaVenta();
+    VentanaVenta vent = new VentanaVenta();vent.mostarVenta(vent.ventas.get(0));
+
+}
+
 }
