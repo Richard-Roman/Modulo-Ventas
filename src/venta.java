@@ -2,12 +2,6 @@
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.border.*;
 
 public class venta {
     private String CodVenta, FechaEmicion,  Observaciones;
@@ -16,7 +10,10 @@ public class venta {
     public vendedor v = new vendedor();
     private Set<detalleVenta> Registventa = new LinkedHashSet<>();
     public static ArrayList<String> numeroVentas = new ArrayList<>(Arrays.asList("001", "002", "003", "004"));
+
     
+
+
 
     public venta(){  
     }
@@ -108,8 +105,8 @@ public class venta {
     public static void main(String[] args) {
         //venta venta = new venta();venta.LlenarVenta();venta.MostrarVenta();
         //new ventanaVenta();
-        venta vn = new venta();
-        venta.CrearVenta();
+        new venta();
+        
     }
 }
 
