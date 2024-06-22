@@ -4,6 +4,7 @@ import java.awt.event.*;
 import Componentes.*;
 public class f_main extends JFrame{
    private xButton ventas, productos, cliente, vendedor, documentosPago, MediosPago, consultas, reportes, salir;
+   ImageIcon icon;
    f_main(){
       super();
       init();
@@ -12,6 +13,10 @@ public class f_main extends JFrame{
    }
    
    private void init(){
+      icon = new ImageIcon("src/resources/icon/MainIcon.png");
+      System.out.println(icon);
+      this.setIconImage(icon.getImage());
+      
       this.setMinimumSize(new Dimension(1200, 800));
       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       this.setLocationRelativeTo(null);
