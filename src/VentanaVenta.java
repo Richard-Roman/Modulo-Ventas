@@ -29,12 +29,7 @@ public class VentanaVenta extends JFrame{
         public static ArrayList<String> numeroVentas = new ArrayList<>(Arrays.asList("001", "002", "003", "004"));
 
         public VentanaVenta() {
-            venta vent = new venta();
-            producto p = new producto(2, "Manzana"); p.setPrecio(2.5);
-            vent.setCodVenta("005");vent.setFechaEmicion("17/06/2024");vent.setCliente(new cliente("Dni",72743196));vent.c.setNombre("Jhon Dalton");
-            detalleVenta dt = new detalleVenta(p,2);
-            vent.getRegistventa().add(dt);
-            ventas.add(vent);
+  
 
             //-------------------CONSTRUCTOR PARA CREAR UNA VENTANA VASIA---------------------------------------
 
@@ -276,7 +271,7 @@ public class VentanaVenta extends JFrame{
         ventana.setTxtVendedor(vtn.getVendedor().getNombre());
     }
 
-    public void agregarRegistrosJTable(VentanaVenta VtnV,Set<detalleVenta> Registventa){
+    public void agregarRegistrosJTable(VentanaVenta VtnV, ArrayList<detalleVenta> Registventa){
         for(detalleVenta dtv : Registventa){
             int fila = dtv.getFilaRegistro();
             VtnV.table.getModel().setValueAt(dtv.producto.getIdProducto(), fila, 0);
@@ -305,18 +300,33 @@ public class VentanaVenta extends JFrame{
         vn.c.setTipoId(gettxtTipoDocumento());
         vn.c.setId(Integer.parseInt(gettxtDocumento()));
         vn.v.setNombre(gettxtVendedor()); 
-        vn.setTotal(Double.parseDouble(getTxtTotal()));
+        //vn.setTotal(Double.parseDouble(getTxtTotal()));
     }
     private void ExtraerRegistros(){
-        for (int rowIndex = 0; rowIndex < getTableRows(); rowIndex++) {
+        int rowIndex,colIndex;
+        for (rowIndex = 0; rowIndex < getTableRows(); rowIndex++) {
             detalleVenta dtv = new detalleVenta();
             // Verificar si la fila tiene datos
-            for (int colIndex = 0; colIndex < getTableColums(); colIndex++) {
+            for (colIndex = 0; colIndex < getTableColums(); colIndex++) {
                 Object cellData = getTable().getValueAt(rowIndex, colIndex);
                 if (cellData != null && !cellData.toString().trim().isEmpty()) {
-                    dtv.incertEnRegistro(colIndex, cellData.toString());
-                    //rowHasData = true;
-                    break;
+                    String dato = cellData.toString();
+                    if(colIndex==0){
+                        dtv.getProducto().setIdProducto(Integer.parseInt(dato));
+                    }
+                    if(colIndex==1){
+                        dtv.getProducto().setNombre(dato);
+                    }else if(colIndex>1){
+                        if (dtv.getProducto()==null) {
+                            break;
+                        }else if(colIndex==2){
+                            dtv.getProducto().setPrecio(Double.parseDouble(dato));
+                        }else if(colIndex==3){
+                            dtv.setCantidad(Double.parseDouble(dato));
+                        }else if(colIndex==4){
+                            dtv.setSubTotal(Double.parseDouble(dato));
+                        }     
+                    }           
                 }
             }
             if (dtv!=null){
@@ -344,7 +354,11 @@ public class VentanaVenta extends JFrame{
         salvar();
         ventas.add(vn);
         System.out.println("guardando venta");
+        System.out.println("Encabezado");
         System.out.println(ventas.get(0).getCodVenta()+ventas.get(0).getFechaEmicion()+ventas.get(0).getCliente().getNombre()+ventas.get(0).getVendedor().getNombre() );
+        System.out.println("Registros");
+        ArrayList<detalleVenta> registro1 = ventas.get(0).getRegistventa();
+        System.out.println(registro1.get(0).getProducto().getIdProducto()+" "+registro1.get(0).getProducto().getNombre()+" "+registro1.get(0).getProducto().getPrecio()+" "+registro1.get(0).getCantidad());
         //return this.vn;
     }
     public void cancelar(){
@@ -354,7 +368,7 @@ public class VentanaVenta extends JFrame{
 
     public static void main(String[] args) {
     //new VentanaVenta();
-    VentanaVenta vent = new VentanaVenta();vent.mostarVenta(vent.ventas.get(0));
+    VentanaVenta vent = new VentanaVenta();//vent.mostarVenta(vent.ventas.get(0));
 
 }
 
