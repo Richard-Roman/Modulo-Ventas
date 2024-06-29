@@ -8,7 +8,7 @@ public class venta {
     private double total;
     public cliente c = new cliente();
     public vendedor v = new vendedor();
-    private Set<detalleVenta> Registventa = new LinkedHashSet<>();
+    private ArrayList<detalleVenta> Registventa = new ArrayList<>();
     public static ArrayList<String> numeroVentas = new ArrayList<>(Arrays.asList("001", "002", "003", "004"));
 
     
@@ -31,8 +31,11 @@ public class venta {
     public String getObservaciones() {
         return Observaciones;
     }
-    public Set<detalleVenta> getRegistventa() {
+    public ArrayList<detalleVenta> getRegistventa() {
         return Registventa;
+    }
+    public detalleVenta extrarDetalleVenta() {
+        return null;//Registventa;
     }
     public void agragarRegistro(detalleVenta registro){
         this.Registventa.add(registro);
@@ -64,6 +67,9 @@ public class venta {
     }
     public void setVendedor(vendedor vendedor) {
         this.v = vendedor;
+    }
+    public void setRegistventa(ArrayList<detalleVenta> registventa) {
+        Registventa = registventa;
     }
 
 
