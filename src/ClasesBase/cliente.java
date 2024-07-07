@@ -1,26 +1,23 @@
+package ClasesBase;
 public class cliente extends persona {
    private String tipoId;
 
-   public cliente(){
-   }
-   // metodo construtor de la clase persona 
-
-   public cliente(String tipoId, int id){
-      super.setId(id);
-      setTipoId(tipoId);
-   }
-   
-   public void setTipoId(String tipoId){
+    // Constructor que inicializa todos los atributos, incluidos los de la clase base
+   public cliente(String id, String nombre, Integer telefono, String tipoId) {
+      super(id, nombre, telefono);
       this.tipoId = tipoId;
    }
    
-   public String getTipoId(){
+
+    // Getters and Setters
+   public String getTipoId() {
       return tipoId;
    }
-     
-   public String toString() {
-      return tipoId + ": " + getId() + " - "+ getNombre()  + " - Telefono: " + getTelefono();
+
+   public void setTipoId(String tipoId) {
+      this.tipoId = tipoId;
    }
+   
    
    public void imprimir(){
       System.out.println(this.toString());
@@ -44,8 +41,18 @@ public class cliente extends persona {
       }
    }
    
+   @Override
+   public String toString(){
+      return tipoId + " - " + super.toString();
+   }
+   
+   public String[] toArray(){
+      String cliente[] = {getTipoId(), getId(), getNombre(), getTelefono().toString()};
+      return cliente;
+   }
+   
    // metodo para completar el registro del cliente 
-   public static cliente completarRegistro(cliente c){
+    /*public static cliente completarRegistro(cliente c){
          while(c.estaLleno()!=0){
             switch(c.estaLleno()){
                case 1: if(c.tieneRuc()){
@@ -67,5 +74,5 @@ public class cliente extends persona {
       id = leer.Entero("Numero de " + tipoId);
       cliente c = new cliente(tipoId,id);
       return c;
-   }
+   }*/
 }

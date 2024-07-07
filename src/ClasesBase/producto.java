@@ -1,9 +1,12 @@
+package ClasesBase;
 public class producto {
     private int idProducto;
     private String nombre;
     private double precio;
     
-    public producto() { // Constructor 
+    public producto() { // Constructor
+        
+
     }
     public producto(int idProducto, String nombre) { // Constructor
         this.idProducto = idProducto;
@@ -59,7 +62,7 @@ public class producto {
     }
    
    // Metodo staticos para crear nueovs objetos a partid de la clase
-    
+  /*  
     public static producto crearProducto(){
       System.out.println("Ingrese los siguientes datos:");
       int idProducto = leer.Entero("Codigo del producto");
@@ -73,5 +76,5 @@ public class producto {
       return p;
     }
     
-    
+    */
 }
