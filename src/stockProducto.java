@@ -12,6 +12,7 @@ public class stockProducto{
       setProducto(prod);
    }
    
+   // metodos set y get de producto
    public void setProducto(producto prod){
       this.prod = prod;
    }
@@ -28,6 +29,7 @@ public class stockProducto{
       return stock;
    }
    
+   // metodo toString 
    public String toString(){
       return prod.toString() + " - " + stock;
    }

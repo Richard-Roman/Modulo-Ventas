@@ -3,9 +3,7 @@ public class producto {
     private String nombre;
     private double precio;
     
-    public producto() { // Constructor
-        
-
+    public producto() { // Constructor 
     }
     public producto(int idProducto, String nombre) { // Constructor
         this.idProducto = idProducto;

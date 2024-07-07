@@ -2,7 +2,6 @@ public class cliente extends persona {
    private String tipoId;
 
    public cliente(){
-      
    }
    // metodo construtor de la clase persona 
 
@@ -22,7 +21,6 @@ public class cliente extends persona {
    public String toString() {
       return tipoId + ": " + getId() + " - "+ getNombre()  + " - Telefono: " + getTelefono();
    }
-   
    
    public void imprimir(){
       System.out.println(this.toString());

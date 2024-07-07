@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import Componentes.*;
 public class f_main extends JFrame{
    private xButton ventas, productos, cliente, vendedor, documentosPago, MediosPago, consultas, reportes, salir;
    ImageIcon icon;

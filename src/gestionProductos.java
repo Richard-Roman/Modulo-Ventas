@@ -6,6 +6,80 @@ public class gestionProductos{
    private static stockProducto stockProd;
    private static producto p;
    
+    /// Metodos que se encargan de presentar el menu y llamar a los demas metodos para realizar la manipulacion.
+   
+    public void gestionar(){
+      int op = 0;
+      do{
+      System.out.println("\n---> GESTION DE PRODUCTOS <---");
+      System.out.println("1. Registrar producto\n2. Buscar producto\n3. Modificar producto/Stock\n4. Eliminar producto\n5. Imprimir\n6. Consultas\n7. Reportes\n8. Regresar al menu principal");
+      op = leer.Entero("Opcion");
+            switch(op){
+               case 1:registrarProducto(); break;
+               case 2:menuBuscar(); break;
+               case 3:menuModificar(); break;
+               case 4:menuEliminar(); break;
+               case 5:menuImprimir(); break;
+               case 6:/* menuConsultas();*/ break;
+               case 7:/* menuReportes(); */ break;
+               case 8: System.out.println("\n<----- Regresando"); break;
+               default: System.out.println("la opcion " + op + " no es valida"); break;
+            }
+      } while(op!=8);
+   } 
+
+
+   public void registrarProducto(){
+      int op =0;
+      do{
+         System.out.println("\n----> REGISTRAR PRODUCTO <----");
+         System.out.println("\n1. Iniciar registro \n2. Regresar al menu anterior");
+         op = leer.Entero("Opcion");
+         switch(op){
+            case 1: System.out.println("\nRegistrando nuevo Producto");
+               stockProd = stockProducto.crearProducto();
+               if(!this.estaRegistrado(stockProd)){
+                  stockProd = stockProducto.completarRegistro(stockProd);
+                  registroProductos.add(stockProd);
+                  p = stockProd.getProducto();
+                  System.out.println("\nRegistro exitoso");
+               } else {
+                  System.out.println("\nProducto con codigo" + p.getIdProducto()+ " - " + p.getNombre() + " ya esta registrado");
+               }
+               break;
+            case 2: System.out.println("\n<----- Regresando"); break;
+            default: System.out.println("la opcion " + op + " no es valida"); break;
+         }
+      } while(op!=2);
+   }
+   
+
+   public void menuBuscar(){
+      int op = 0;
+      do{
+         System.out.println("\n------> BUSCAR PRODUCTO <------");
+         System.out.println("\n1. Iniciar Busqueda\n2. Regresar al menu anterior");
+         op = leer.Entero("Opcion");
+         switch(op){
+            case 1:
+               System.out.println("\nSeleccione el producto a buscar");
+               p = new producto(leer.Entero("Codigo del producto"));
+               stockProd = new stockProducto(p);
+               stockProd = this.getStockProducto(stockProd);
+               if(stockProd != null){
+                  p = stockProd.getProducto();
+                  System.out.println("\nEl producto con codigo " +  p.getIdProducto()+ " - " + p.getNombre() + " si esta registrado");
+               } else {
+                  System.out.println("\nEl producto con codigo " +  p.getIdProducto()+ " no esta registrado");
+               }
+               break;
+            case 2: System.out.println("\n<----- Regresando"); break;
+            default: System.out.println("la opcion " + op + " no es valida"); break;
+         }
+      }while(op!=2);
+   }
+   
+
    public void setProducto(stockProducto sp){
       p = sp.getProducto();
       if(this.estaRegistrado(sp)){
@@ -51,76 +125,9 @@ public class gestionProductos{
       }
    }
    
-   /// Metodos que se encargan de presentar el menu y llamar a los demas metodos para realizar la manipulacion.
+  
    
-   public void gestionar(){
-      int op = 0;
-      do{
-      System.out.println("\n---> GESTION DE PRODUCTOS <---");
-      System.out.println("1. Registrar producto\n2. Buscar producto\n3. Modificar producto/Stock\n4. Eliminar producto\n5. Imprimir\n6. Consultas\n7. Reportes\n8. Regresar al menu principal");
-      op = leer.Entero("Opcion");
-            switch(op){
-               case 1:registrarProducto(); break;
-               case 2:menuBuscar(); break;
-               case 3:menuModificar(); break;
-               case 4:menuEliminar(); break;
-               case 5:menuImprimir(); break;
-               case 6:/* menuConsultas();*/ break;
-               case 7:/* menuReportes(); */ break;
-               case 8: System.out.println("\n<----- Regresando"); break;
-               default: System.out.println("la opcion " + op + " no es valida"); break;
-            }
-      } while(op!=8);
-   } 
-   
-   public void registrarProducto(){
-      int op =0;
-      do{
-         System.out.println("\n----> REGISTRAR PRODUCTO <----");
-         System.out.println("\n1. Iniciar registro \n2. Regresar al menu anterior");
-         op = leer.Entero("Opcion");
-         switch(op){
-            case 1: System.out.println("\nRegistrando nuevo Producto");
-               stockProd = stockProducto.crearProducto();
-               if(!this.estaRegistrado(stockProd)){
-                  stockProd = stockProducto.completarRegistro(stockProd);
-                  registroProductos.add(stockProd);
-                  p = stockProd.getProducto();
-                  System.out.println("\nRegistro exitoso");
-               } else {
-                  System.out.println("\nProducto con codigo" + p.getIdProducto()+ " - " + p.getNombre() + " ya esta registrado");
-               }
-               break;
-            case 2: System.out.println("\n<----- Regresando"); break;
-            default: System.out.println("la opcion " + op + " no es valida"); break;
-         }
-      } while(op!=2);
-   }
-   
-   public void menuBuscar(){
-      int op = 0;
-      do{
-         System.out.println("\n------> BUSCAR PRODUCTO <------");
-         System.out.println("\n1. Iniciar Busqueda\n2. Regresar al menu anterior");
-         op = leer.Entero("Opcion");
-         switch(op){
-            case 1:
-               System.out.println("\nSeleccione el producto a buscar");
-               p = new producto(leer.Entero("Codigo del producto"));
-               stockProd = new stockProducto(p);
-               stockProd = this.getStockProducto(stockProd);
-               if(stockProd != null){
-                  p = stockProd.getProducto();
-                  System.out.println("\nEl producto con codigo " +  p.getIdProducto()+ " - " + p.getNombre() + " si esta registrado");
-               } else {
-                  System.out.println("\nEl producto con codigo " +  p.getIdProducto()+ " no esta registrado");
-               }
-               break;
-            case 2: System.out.println("\n<----- Regresando"); break;
-            default: System.out.println("la opcion " + op + " no es valida"); break;
-         }
-      }while(op!=2);
-   }
+ 
    
    public void menuModificar(){
    int op = 0;

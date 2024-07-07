@@ -12,9 +12,6 @@ public class venta {
     public static ArrayList<String> numeroVentas = new ArrayList<>(Arrays.asList("001", "002", "003", "004"));
 
     
-
-
-
     public venta(){  
     }
 
