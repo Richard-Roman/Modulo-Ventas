@@ -1,5 +1,6 @@
 package Frame;
 import Panels.*;
+import ClasesGestion.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -27,10 +28,16 @@ public class Main extends JFrame{
    
    private JLabel tituloLabel;
    
+   private gestionClientes registroClientes;
+   
    public Main(){
       super();
       init();
    
+   }
+   
+   private void initRegistros(){
+      registroClientes = new gestionClientes();
    }
    
    private void init(){
@@ -41,6 +48,8 @@ public class Main extends JFrame{
       setLayout(new BorderLayout());
       setSize(new Dimension(1280,1024));
       setMinimumSize(new Dimension(960,720));
+      
+      initRegistros(); // gestionador de registros
       
       componentes();// COMPONENTES SWING
       
@@ -269,7 +278,7 @@ public class Main extends JFrame{
    }
    
    private void cargaPanels(){
-      panelClientes = new ClientesPanel(); 
+      panelClientes = new ClientesPanel(registroClientes); 
       panelProductos = new ProductosPanel();
       panelVendedores = new VendedoresPanel();
       panelVenta = new VentasPanel(); 

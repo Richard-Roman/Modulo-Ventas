@@ -82,9 +82,13 @@ public class xCampo extends JPanel{
    }
 
     // Getters y Setters para xFieldText
-   public String getFieldText() {
-      xFieldText = xField.getText();
-      return xFieldText;
+   public String getFieldText(){
+      xFieldText = xField.getText().trim();
+      if (xFieldText.isEmpty()) {
+         return null;
+      } else {
+         return xFieldText;
+      }
    }
 
    public void setFieldText(String fieldText) {

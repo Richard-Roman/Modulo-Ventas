@@ -2,6 +2,7 @@ package Panels;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ActionListener;
@@ -84,7 +85,7 @@ public class ProductosPanel extends JPanel {
    private void addTabla(){
       // Crear el panel central para la tabla
       String[] columnNames = {"Código del producto", "Descripción", "Precio", "Stock"};
-      Object[][] data = new Object[5][4]; // 5 filas, 4 columnas
+      String[][] data = new String[5][4]; // 5 filas, 4 columnas
       tablaProductos = new JTable(data, columnNames);
       
       TableColumnModel columnModel = tablaProductos.getColumnModel();
