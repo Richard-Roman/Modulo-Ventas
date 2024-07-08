@@ -189,42 +189,9 @@ public class gestionVendedor {
          }  
       }
 
-      public void menuImprimirVendedor(){
-         int op = 0;
-            do{
-               System.out.println("\n----> IMPRIMIR <----");
-               System.out.println("\n1. Imprimir todo las lista de vendedores\n2. Imprimir un vendedor\n3. Regresar al menu anterior");
-               op = leer.Entero("Opcion");
-               switch(op){
-                  case 1: System.out.println("\nImprimiendo Registro de Vendedores");
-                     this.imprimir();
-                     break;
-                  case 2:
-                     System.out.println("\nSeleccione el cliente a imprimir");
-                     auxi = vendedor.crearVendedor();
-                     auxi = this.getVendedor(auxi);
-                     if(auxi != null){
-                        auxi.imprimir(); break;
-                     } else {
-                        System.out.println("\nEl cliente con DNI: " +auxi.getId() + " no esta registrado");
-                     } break;
-                  case 3:System.out.println("\n<----- Regresando"); break;
-                  default: System.out.println("la opcion " + op + " no es valida"); break;          
-               }
-            }while(op!=3);
-         }
-
-         public void imprimir(){
-            for(vendedor i: registroVendedores){
-               i.imprimir();
-            }
-         }
-
-   
    public void imprimirRegistroVendedor() {
-         
-      String NombreArchivo = leer.Cadena("Ingrese un nombre para el archivo");
-      String rutaArchivo = "C:\\Users\\USUARIO\\Documents\\reportes\\"+NombreArchivo+".pdf"; // ruta del archivo pdf
+      String nombreArchivo = leer.Cadena("Ingrese un nombre para el archivo");
+      String rutaArchivo = "C:\\Users\\USUARIO\\Documents\\reportes\\"+nombreArchivo+".pdf"; // Cambia esto a tu ruta deseada
 
         try {
             // Crear el documento PDF
@@ -237,7 +204,6 @@ public class gestionVendedor {
             // Agregar cabecera con título y fecha en la misma línea
             Paragraph header = new Paragraph("Reporte de Vendedores", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
             header.setAlignment(Element.ALIGN_LEFT);
-
             Paragraph date = new Paragraph(new SimpleDateFormat("dd/MM/yyyy").format(new Date()), FontFactory.getFont(FontFactory.HELVETICA, 12));
             date.setAlignment(Element.ALIGN_RIGHT);
 
@@ -271,13 +237,14 @@ public class gestionVendedor {
                 table.addCell(vendedor.getNombre());
                 table.addCell(vendedor.getTelefono().toString()); // Transformar a String
             }
+
             // Agregar la tabla al documento
             document.add(table);
 
             // Cerrar el documento
             document.close();
 
-            System.out.println("PDF creado en: " + rutaArchivo);
+            System.out.println("PDF creado en la ruta: " + rutaArchivo);
         } catch (FileNotFoundException | DocumentException e) {
             e.printStackTrace();
         }
@@ -290,8 +257,7 @@ public class gestionVendedor {
         cell.setHorizontalAlignment(alignment);
         return cell;
     }
-   
-            public static void main(String args[]){
+   public static void main(String args[]){
                gestionVendedor nuevo = new gestionVendedor();
                nuevo.gestionarVendedor();
             }

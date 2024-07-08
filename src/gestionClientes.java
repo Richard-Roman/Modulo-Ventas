@@ -1,13 +1,10 @@
 import java.util.Set;
-
 import javax.swing.JOptionPane;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
-
 import com.itextpdf.text.Chunk;
 // libreria PDF
 import com.itextpdf.text.Document;
@@ -20,12 +17,10 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 // OHHHH
 
 public class gestionClientes{
@@ -243,33 +238,10 @@ public class gestionClientes{
       }while(op!=2); 
    }
    
-   public void menuImprimir(){
-   int op = 0;
-      do{
-         System.out.println("\n----> IMPRIMIR <----");
-         System.out.println("\n1. Imprimir todo\n2. Imprimir un cliente\n3. Regresar al menu anterior");
-         op = leer.Entero("Opcion");
-         switch(op){
-            case 1: System.out.println("\nImprimiendo Registro de Clientes");
-               this.imprimir();
-               break;
-            case 2:
-               System.out.println("\nSeleccione el cliente a imprimir");
-               cl = cliente.crearCliente();
-               cl = this.getCliente(cl);
-               if(cl != null){
-                  cl.imprimir(); break;
-               } else {
-                  System.out.println("\nEl cliente con " + cl.getTipoId()+ ": " +cl.getId() + " no esta registrado");
-               } break;
-            case 3:System.out.println("\n<----- Regresando"); break;
-            default: System.out.println("la opcion " + op + " no es valida"); break;          
-         }
-      }while(op!=3);
-   }
 
    public void imprimirRegistroCliente() {
-        String rutaArchivo = "C:\\Users\\USUARIO\\Documents\\reportes\\reporteClientes.pdf"; // Cambia esto a tu ruta deseada
+      String nombreArchivo = leer.Cadena("Ingrese un nombre para el archivo");
+      String rutaArchivo = "C:\\Users\\USUARIO\\Documents\\reportes\\"+nombreArchivo+".pdf"; // Cambia esto a tu ruta deseada
 
         try {
             // Crear el documento PDF
@@ -338,11 +310,8 @@ public class gestionClientes{
         return cell;
     }
    
-
-   
    public static void main(String args[]){
       gestionClientes clientes = new gestionClientes();
       clientes.gestionar();
    }
 }
-
