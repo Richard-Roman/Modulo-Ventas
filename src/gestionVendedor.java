@@ -1,5 +1,20 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class gestionVendedor {
      private Set<vendedor> registroVendedores = new HashSet<>();
@@ -16,7 +31,7 @@ public class gestionVendedor {
              case 2: buscarVendedor(); break; // llamamos al metodo buscar un cliente 
              case 3: menuModificarVendedor(); break;
              case 4: menuEliminarVendedor(); break;
-             case 5: menuImprimirVendedor(); break;
+             case 5: imprimirRegistroVendedor(); break;
              case 6: System.out.println("\n<----- Regresando"); break;
              default: System.out.println("la opcion " + op + " no es valida"); break;
           }
@@ -205,6 +220,77 @@ public class gestionVendedor {
             }
          }
 
+   
+   public void imprimirRegistroVendedor() {
+         
+      String NombreArchivo = leer.Cadena("Ingrese un nombre para el archivo");
+      String rutaArchivo = "C:\\Users\\USUARIO\\Documents\\reportes\\"+NombreArchivo+".pdf"; // ruta del archivo pdf
+
+        try {
+            // Crear el documento PDF
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(rutaArchivo));
+
+            // Abrir el documento para escribir
+            document.open();
+
+            // Agregar cabecera con título y fecha en la misma línea
+            Paragraph header = new Paragraph("Reporte de Vendedores", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+            header.setAlignment(Element.ALIGN_LEFT);
+
+            Paragraph date = new Paragraph(new SimpleDateFormat("dd/MM/yyyy").format(new Date()), FontFactory.getFont(FontFactory.HELVETICA, 12));
+            date.setAlignment(Element.ALIGN_RIGHT);
+
+            // Crear una tabla para cabecera y fecha
+            PdfPTable headerTable = new PdfPTable(2);
+            headerTable.setWidthPercentage(100);
+            headerTable.addCell(createCell(header, Element.ALIGN_LEFT));
+            headerTable.addCell(createCell(date, Element.ALIGN_RIGHT));
+            document.add(headerTable);
+
+            // Espacio después de la cabecera
+            document.add(Chunk.NEWLINE);
+
+            // Crear la tabla con 4 columnas
+            PdfPTable table = new PdfPTable(3);
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
+
+            // Encabezados de la tabla
+            String[] columnHeaders = { "DNI", "Nombre", "Teléfono"};
+            for (String headerTitle : columnHeaders) {
+                PdfPCell headerCell = new PdfPCell(new Phrase(headerTitle, FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+                headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(headerCell);
+            }
+
+            // Datos de la tabla
+            for (vendedor vendedor : registroVendedores) {
+                table.addCell(String.valueOf(vendedor.getId())); // Transformar a String
+                table.addCell(vendedor.getNombre());
+                table.addCell(vendedor.getTelefono().toString()); // Transformar a String
+            }
+            // Agregar la tabla al documento
+            document.add(table);
+
+            // Cerrar el documento
+            document.close();
+
+            System.out.println("PDF creado en: " + rutaArchivo);
+        } catch (FileNotFoundException | DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método auxiliar para crear celdas con alineación específica
+    private PdfPCell createCell(Paragraph content, int alignment) {
+        PdfPCell cell = new PdfPCell(content);
+        cell.setBorder(PdfPCell.NO_BORDER);
+        cell.setHorizontalAlignment(alignment);
+        return cell;
+    }
+   
             public static void main(String args[]){
                gestionVendedor nuevo = new gestionVendedor();
                nuevo.gestionarVendedor();
